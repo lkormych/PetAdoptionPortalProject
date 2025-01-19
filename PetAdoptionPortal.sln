@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PAPData", "PAPData\PAPData.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetAdoptionPortal", "PetAdoptionPortal\PetAdoptionPortal.csproj", "{796ADA6A-F52C-4727-BD9D-3C1EC47A059F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PAPServices", "PAPServices\PAPServices.csproj", "{0DF653F3-2B67-4208-9CE1-1C3C024285AC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{796ADA6A-F52C-4727-BD9D-3C1EC47A059F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{796ADA6A-F52C-4727-BD9D-3C1EC47A059F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{796ADA6A-F52C-4727-BD9D-3C1EC47A059F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DF653F3-2B67-4208-9CE1-1C3C024285AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DF653F3-2B67-4208-9CE1-1C3C024285AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DF653F3-2B67-4208-9CE1-1C3C024285AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DF653F3-2B67-4208-9CE1-1C3C024285AC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

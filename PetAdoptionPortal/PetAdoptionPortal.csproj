@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\PAPData\PAPData.csproj" />
+      <ProjectReference Include="..\PAPServices\PAPServices.csproj" />
     </ItemGroup>
 
     <ItemGroup>

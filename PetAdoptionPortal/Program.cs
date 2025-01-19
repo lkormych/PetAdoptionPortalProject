@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PAPData.Entities;
+using PAPData.Entities.Repositories;
+using PAPServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +23,9 @@ builder.Services.AddAuthentication()
         options.LoginPath = "/Identity/Account/Login";
         options.AccessDeniedPath = "/Identity/Account/AccessDenied";
     });
+
+builder.Services.AddScoped<IPetRepository, PetRepository>();
+builder.Services.AddScoped<PetService>();
 
 var app = builder.Build();
 
