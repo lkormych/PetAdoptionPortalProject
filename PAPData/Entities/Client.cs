@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Identity;
+
 namespace PAPData.Entities;
 
 public class Client
@@ -8,6 +10,10 @@ public class Client
     public string Email { get; set; }
     public string PhoneNumber { get; set; }
     public string Address { get; set; }
+    
+    // FK to IdentityUser (optional relationship)
+    public string? IdentityUserId { get; set; }
+    public IdentityUser? IdentityUser { get; set; }
     
     // relationships
     public ICollection<AppliedForAdoption> AppliedForAdoptions { get; set; }

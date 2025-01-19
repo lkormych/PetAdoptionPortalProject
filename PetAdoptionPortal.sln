@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PAPData", "PAPData\PAPData.csproj", "{3643DE33-79F0-45A5-9872-18757332781E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetAdoptionPortal", "PetAdoptionPortal\PetAdoptionPortal.csproj", "{796ADA6A-F52C-4727-BD9D-3C1EC47A059F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{3643DE33-79F0-45A5-9872-18757332781E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3643DE33-79F0-45A5-9872-18757332781E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3643DE33-79F0-45A5-9872-18757332781E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{796ADA6A-F52C-4727-BD9D-3C1EC47A059F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{796ADA6A-F52C-4727-BD9D-3C1EC47A059F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{796ADA6A-F52C-4727-BD9D-3C1EC47A059F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{796ADA6A-F52C-4727-BD9D-3C1EC47A059F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
