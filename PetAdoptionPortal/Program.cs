@@ -15,14 +15,23 @@ builder.Services.AddDbContext<PAPContext>(options =>
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<PAPContext>();
+
+builder.Services.AddAuthentication()
+    .AddCookie(options => {
+        options.LoginPath = "/Identity/Account/Login";
+        options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+    });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
+    
 }
 
+app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -34,4 +43,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.MapRazorPages();
 app.Run();
