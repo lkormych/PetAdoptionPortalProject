@@ -71,5 +71,8 @@ public class PAPContext : IdentityDbContext<IdentityUser>
             .HasForeignKey(a => a.PetId)
             .OnDelete(DeleteBehavior.NoAction);
 
+        modelBuilder.Entity<Pet>()
+            .Property(p => p.PictureUrl);
+
     }
 }

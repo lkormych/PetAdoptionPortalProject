@@ -17,6 +17,7 @@ public class Pet
     public string Color { get; set; }
     public string Description {get; set;}
     public PetStatus Status { get; set; }
+    public string PictureUrl { get; set; }
     
     // relationships
     public ICollection<AppliedForAdoption> AppliedForAdoptions { get; set; }
