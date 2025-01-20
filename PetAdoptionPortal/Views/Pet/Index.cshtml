@@ -5,11 +5,32 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Explore our beautiful dogs</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create adoption listing</a>
 </p>
+<div id="main">
+    <div class="inner">
+        <section class="tiles">
+            @foreach (var dog in Model)
+            {
+                <article>
+                    <span class="image">
+                        <img src="@dog.PictureUrl" alt=""/>
+                    </span>
+                    <a asp-action="Details" asp-route-id="@dog.PetId"></a>
+                    <h2>@dog.Name</h2>
+                    <div class="content">
+                        <text>@dog.Breed - @dog.Location </text>
+                    </div>
+            
+                </article>
+        
+            }
+        </section>
+    </div>
+</div>
 <table class="table">
     <thead>
         <tr>
