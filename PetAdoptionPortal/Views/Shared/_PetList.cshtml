@@ -1,0 +1,72 @@
+@model PAPData.Entities.Pet
+
+@if (Model == null)
+{
+    <h1>Oops!</h1>
+    <p class="text-danger">Sorry, the pet details you're looking for are not available.</p>
+}
+else
+{
+    <span class="image main"><img src="@Model.PictureUrl" alt="" /></span>
+    <h1>@Model.Name</h1>
+    <h3>@Model.Breed</h3>
+    <section>
+        <div class="table">
+            <table>
+        
+                <tbody>
+                <tr>
+                    <td><strong>Age:</strong></td>
+                    <td>@Model.Age </td>
+                </tr>
+                <tr>
+                    <td><strong>Gender:</strong></td>
+                    <td>@Model.Gender </td>
+                </tr>
+                <tr>
+                    <td><strong>Adoption Price:</strong></td>
+                    <td>@Model.AdoptionPrice.ToString("C")</td>
+                </tr>
+                <tr>
+                    <td><strong>Castrated:</strong></td>
+                    <td>@Model.IsCastrated </td>
+                </tr>
+                <tr>
+                    <td><strong>Coat:</strong></td>
+                    <td>@Model.Coat </td>
+                </tr>
+                <tr>
+                    <td><strong>Size:</strong></td>
+                    <td>@Model.Size </td>
+                </tr>
+                <tr>
+                    <td><strong>Affectionate:</strong></td>
+                    <td>@Model.IsAffectionate </td>
+                </tr>
+                <tr>
+                    <td><strong>Location:</strong></td>
+                    <td>@Model.Location </td>
+                </tr>
+                <tr>
+                    <td><strong>Activity:</strong></td>
+                    <td>@Model.ActivityLevel </td>
+                </tr>
+                <tr>
+                    <td><strong>Color:</strong></td>
+                    <td>@Model.Color </td>
+                </tr>
+                <tr>
+                    <td><strong>Status:</strong></td>
+                    <td>@Model.Status </td>
+                </tr>
+                </tbody>
+            </table>
+    
+        </div>
+        <h3>Description</h3>
+        <p>@Model.Description</p>
+        <p></p>
+    </section>
+}
+    
+<a class="button" asp-action="Index">Go back</a>
