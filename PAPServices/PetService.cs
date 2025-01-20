@@ -11,10 +11,15 @@ public class PetService
     {
         this.petRepository = petRepository;
     }
-
+// list of all pets with Status == 0 (Available)
     public async Task<List<Pet>> GetAllAvailablePets()
     {
         return await petRepository.GetAllAvailablePets();
+    }
+// get Pet object
+    public async Task<Pet?> GetPetById(int id)
+    {
+        return await petRepository.GetPetById(id);
     }
   
 }

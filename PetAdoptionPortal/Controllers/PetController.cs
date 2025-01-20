@@ -12,7 +12,6 @@ namespace PetAdoptionPortal.Controllers
 {
     public class PetController : Controller
     {
-       
         private readonly PetService _petService;
 
         public PetController(PetService petService)
@@ -27,21 +26,11 @@ namespace PetAdoptionPortal.Controllers
         }
 
         // GET: Pet/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
-            // if (id == null)
-            // {
-            //     return NotFound();
-            // }
-            //
-            // var pet = await _context.Pets
-            //     .FirstOrDefaultAsync(m => m.PetId == id);
-            // if (pet == null)
-            // {
-            //     return NotFound();
-            // }
+            var pet = await _petService.GetPetById(id);
 
-            return View();
+            return View(pet);
         }
 
         // GET: Pet/Create

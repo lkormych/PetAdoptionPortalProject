@@ -14,4 +14,9 @@ public class PetRepository : IPetRepository
     {
         return await _context.Pets.Where(p => p.Status == 0).ToListAsync();
     }
+
+    public async Task<Pet?> GetPetById(int id)
+    {
+        return await _context.Pets.FindAsync(id);
+    }
 }

@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace PAPData.Entities;
 
 public class Pet
@@ -7,6 +9,7 @@ public class Pet
     public string Breed { get; set; }
     public int Age { get; set; }
     public string Gender { get; set; }
+    [DisplayFormat(DataFormatString = "{0:C}", ApplyFormatInEditMode = true)]
     public decimal AdoptionPrice { get; set; }
     public string IsCastrated { get; set; }
     public string Coat { get; set; }
