@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PAPData.Entities;
 using PAPData.Entities.Repositories;
 using PAPServices;
+using PetAdoptionPortal.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,16 +15,9 @@ builder.Services.AddDbContext<PAPContext>(options =>
         builder.Configuration.GetConnectionString("PAPConnection"),
         x => x.MigrationsAssembly("PAPData")));
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<PAPContext>()
-    .AddDefaultTokenProviders()
-    .AddDefaultUI();
-
-builder.Services.AddAuthentication()
-    .AddCookie(options => {
-        options.LoginPath = "/Identity/Account/Login";
-        options.AccessDeniedPath = "/Identity/Account/AccessDenied";
-    });
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<PAPContext>();
 
 builder.Services.AddScoped<IPetRepository, PetRepository>();
 builder.Services.AddScoped<PetService>();
@@ -35,21 +29,14 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("User", policy => policy.RequireRole("User"));
 });
 
+builder.Services.AddScoped<IIdentityService, IdentityService>();
 var app = builder.Build();
 
-// seeding roles to database
+// seeding roles to database if not already exist
 using (var scope = app.Services.CreateScope())
 {
-    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    var roles = new[] { "Admin", "User" };
-
-    foreach (var role in roles)
-    {
-        if (!await roleManager.RoleExistsAsync(role))
-        {
-            await roleManager.CreateAsync(new IdentityRole(role));
-        }
-    }
+    var identityService = scope.ServiceProvider.GetRequiredService<IIdentityService>();
+    await identityService.CheckRolesExistsAsync();
 }
 
 // Configure the HTTP request pipeline.
