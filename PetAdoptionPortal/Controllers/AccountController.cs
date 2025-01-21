@@ -44,4 +44,11 @@ public class AccountController : Controller
         }
         return View(loginModel);
     }
+
+    [HttpGet]
+    public IActionResult Register()
+    {
+       var registerModel = new RegisterViewModel();
+        return View(registerModel);
+    }
 }
