@@ -22,6 +22,9 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddScoped<IPetRepository, PetRepository>();
 builder.Services.AddScoped<PetService>();
 
+builder.Services.AddScoped<IClientRepository, ClientRepository>();
+builder.Services.AddScoped<ClientService>();
+
 // adding authorization policies
 builder.Services.AddAuthorization(options =>
 {

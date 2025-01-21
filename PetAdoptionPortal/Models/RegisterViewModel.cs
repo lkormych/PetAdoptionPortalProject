@@ -16,7 +16,8 @@ public class RegisterViewModel
     [EmailAddress]
     [Display(Name = "E-mail")]
     public string Email { get; set; }
-    
+    [Required]
+    public string Address { get; set; }
     [Required]
     [StringLength(100, MinimumLength = 6)]
     [DataType(DataType.Password)]

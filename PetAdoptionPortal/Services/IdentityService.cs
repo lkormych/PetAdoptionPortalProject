@@ -50,4 +50,10 @@ public class IdentityService : IIdentityService
     {
         return await _signInManager.PasswordSignInAsync(user, password, rememberMe, lockoutOnFailure);
     }
+    
+    // creating Identity user
+    public async Task<IdentityResult> CreateUserAsync(IdentityUser user, string password)
+    {
+        return await _userManager.CreateAsync(user, password);
+    }
 }
