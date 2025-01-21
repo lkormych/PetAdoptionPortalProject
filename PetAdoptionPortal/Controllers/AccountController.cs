@@ -15,6 +15,11 @@ public class AccountController : Controller
     // GET
     public IActionResult Login()
     {
+        // check if user is already authenticated, and if yes Redirect to Index() of HomeController
+        if (User.Identity.IsAuthenticated) 
+        {
+            return RedirectToAction("Index", "Home");
+        }
         var loginModel = new LoginViewModel();
         return View(loginModel);
     }
@@ -34,6 +39,7 @@ public class AccountController : Controller
                     return RedirectToAction("Index", "Home");
                 }
             }
+            // otherwise show error message
             ModelState.AddModelError(string.Empty, "Invalid login attempt.");
         }
         return View(loginModel);
