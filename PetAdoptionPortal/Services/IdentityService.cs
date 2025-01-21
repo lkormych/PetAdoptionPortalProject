@@ -6,11 +6,13 @@ public class IdentityService : IIdentityService
 {
     private readonly UserManager<IdentityUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
+    private readonly SignInManager<IdentityUser> _signInManager;
 
-    public IdentityService(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+    public IdentityService(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, SignInManager<IdentityUser> signInManager)
     {
         _userManager = userManager;
         _roleManager = roleManager;
+        _signInManager = signInManager;
     }
     
 // checking if the role exists, creating new if not
@@ -33,5 +35,19 @@ public class IdentityService : IIdentityService
         {
             await _userManager.AddToRoleAsync(user, roleName);
         }
+    }
+    
+    //finding user by email 
+    public async Task<IdentityUser?> FindUserByEmailAsync(string email)
+    {
+        return await _userManager.FindByEmailAsync(email);
+    }
+    
+    // attempt signing in the user using their email and password
+    // returns status SignInResult
+    public async Task<SignInResult> StatusLogIn(IdentityUser user, string password, bool rememberMe,
+        bool lockoutOnFailure)
+    {
+        return await _signInManager.PasswordSignInAsync(user, password, rememberMe, lockoutOnFailure);
     }
 }

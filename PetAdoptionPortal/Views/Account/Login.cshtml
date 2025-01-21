@@ -1,0 +1,45 @@
+@model PetAdoptionPortal.Models.LoginViewModel
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "_Layout";
+}
+
+<h2>Log In to your account</h2>
+<form asp-action="Login">
+   
+    <div class="row gtr-uniform">
+        <div class="col-6 col-12-xsmall">
+
+            <input asp-for="Email" class="form-control" placeholder="Emailadress"/>
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="col-6 col-12-xsmall">
+
+            <input asp-for="Password" class="form-control" placeholder="Password"/>
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="col-4 col-12-small">
+            <label asp-for="RememberMe"></label>
+            <div>
+                <input asp-for="RememberMe" type="radio" value="true" name="RememberMe" id="remember-yes">
+                <label for="remember-yes">Yes</label>
+            </div>
+            <div>
+                <input asp-for="RememberMe" type="radio" value="false" name="RememberMe" id="remember-no">
+                <label for="remember-no">No</label>
+            </div>
+
+        </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="col-12">
+            <ul class="actions">
+                <li><input type="submit" value="Login" class="primary"/></li>
+            </ul>
+        </div>
+
+    </div>
+   
+</form>
+
+ 
