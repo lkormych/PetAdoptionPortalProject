@@ -52,7 +52,11 @@ public class AccountController : Controller
     [HttpGet]
     public IActionResult Register()
     {
-       var registerModel = new RegisterViewModel();
+        if (User.Identity.IsAuthenticated)
+        {
+            return RedirectToAction("Index", "Home");
+        } 
+        var registerModel = new RegisterViewModel();
         return View(registerModel);
     }
 
@@ -74,13 +78,9 @@ public class AccountController : Controller
                 Email = registerModel.Email,
                 PhoneNumber = registerModel.PhoneNumber
             };
-            var result = await _identityService.CreateUserAsync(newUser, registerModel.Password);
-            if (result.Succeeded)
+            var resultCreatedUser = await _identityService.CreateUserAsync(newUser, registerModel.Password);
+            if (resultCreatedUser.Succeeded)
             {
-                // ADD TO ROLE LOGIC
-                // add validation token ?
-                
-                
                 var createdUser = await _identityService.FindUserByEmailAsync(registerModel.Email);
                 // create Client object and add to the database
                 var newClient = new Client()
@@ -93,10 +93,23 @@ public class AccountController : Controller
                     IdentityUserId = createdUser.Id
                 };
                 await _clientService.AddClient(newClient);
+                var resultAddedUserToRole = await _identityService.AddToRoleAsync(createdUser, "User");
+                if (!resultAddedUserToRole.Succeeded)
+                {
+                    // Handling errors if adding the user to the role fails
+                    foreach (var error in resultAddedUserToRole.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                }
+                await _identityService.SignInAsync(createdUser); // keep the user signed in after registering
                 return RedirectToAction("Index", "Home");
             }
-            // if creation of User identity failed, show Error message
-            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            // if creation of User identity failed, show Error message with description
+            foreach (var error in resultCreatedUser.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
         }
         return View(registerModel);
     }

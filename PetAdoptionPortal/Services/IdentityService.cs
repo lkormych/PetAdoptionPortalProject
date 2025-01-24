@@ -56,4 +56,22 @@ public class IdentityService : IIdentityService
     {
         return await _userManager.CreateAsync(user, password);
     }
+    
+    // sign the user in 
+    public async Task SignInAsync(IdentityUser user, bool isPersistent = false) // indicates that login session should not be persistent across browser sessions
+    {
+        await _signInManager.SignInAsync(user, isPersistent);
+    }
+    
+    // adding user to Role
+    public async Task<IdentityResult> AddToRoleAsync(IdentityUser user, string roleName)
+    {
+        // first checking if the role exists, if not, create a new role
+        var roleExists = await _roleManager.RoleExistsAsync(roleName);
+        if (!roleExists)
+        {
+                await _roleManager.CreateAsync(new IdentityRole(roleName));
+        }
+        return await _userManager.AddToRoleAsync(user, roleName);
+    }
 }

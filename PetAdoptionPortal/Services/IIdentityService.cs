@@ -12,4 +12,7 @@ public interface IIdentityService
     Task<SignInResult> StatusLogIn(IdentityUser user, string password, bool rememberMe, bool lockoutOnFailure);
     
     Task<IdentityResult> CreateUserAsync(IdentityUser user, string password);
+    Task SignInAsync(IdentityUser user, bool isPersistent = false);
+    
+    Task<IdentityResult> AddToRoleAsync(IdentityUser user, string roleName);
 }
