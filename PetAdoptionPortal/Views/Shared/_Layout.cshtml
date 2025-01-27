@@ -12,6 +12,8 @@
 <div id="wrapper">
 
     <!-- Header -->
+   
+    
     <header id="header">
         <div class="inner">
             <!-- Logo -->
@@ -22,9 +24,34 @@
             <!-- Navigation -->
             
             <nav>
+                
                 <ul>
-                    <li><a href="#menu">Menu</a></li>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li>
+
+                        <form asp-controller="Account" asp-action="Logout" method="post" class="logoutForm" style="margin-bottom: 0;">
+                            <button type="submit" class="button small">Log Out</button>
+                        </form>
+                    </li>
+                }
+                else
+                {
+                    <div class="login-buttons">
+                        <ul>
+                        <li>
+                            <a class="button small" asp-controller="Account" asp-action="Login">Log In</a>
+                        </li>
+                        <li>
+                            <a class="button small" asp-controller="Account" asp-action="Register">Sign Up</a>
+                        </li>
+                        </ul>
+                    </div>
+                }
+                <li><a href="#menu">Menu</a></li>
+
                 </ul>
+                
             </nav>
            
         </div>
