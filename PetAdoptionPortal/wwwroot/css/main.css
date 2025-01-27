@@ -3336,3 +3336,9 @@ input, select, textarea {
 /*	margin: 100px; */
 /*	list-style: none; */
 /*}*/
+
+.text-danger
+{
+	color: red;
+	font-weight: bold ;
+}

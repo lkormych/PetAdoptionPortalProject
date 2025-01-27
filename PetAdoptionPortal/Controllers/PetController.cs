@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PAPData.Entities;
 using PAPServices;
+using PetAdoptionPortal.Models;
 
 namespace PetAdoptionPortal.Controllers
 {
@@ -34,9 +36,11 @@ namespace PetAdoptionPortal.Controllers
         }
 
         // GET: Pet/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
-            return View();
+            CreatePetListing petListingVM = new CreatePetListing();
+            return View(petListingVM);
         }
 
         // POST: Pet/Create
@@ -44,6 +48,7 @@ namespace PetAdoptionPortal.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("PetId,Name,Breed,Age,Gender,AdoptionPrice,IsCastrated,Coat,Size,IsAffectionate,Location,ActivityLevel,Color,Description,Status,PictureUrl")] Pet pet)
         {
             // if (ModelState.IsValid)
