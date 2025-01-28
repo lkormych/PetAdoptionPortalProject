@@ -15,10 +15,12 @@ namespace PetAdoptionPortal.Controllers
     public class PetController : Controller
     {
         private readonly PetService _petService;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public PetController(PetService petService)
+        public PetController(PetService petService, IWebHostEnvironment webHostEnvironment)
         {
             _petService = petService;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Pet
@@ -49,15 +51,43 @@ namespace PetAdoptionPortal.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Create([Bind("PetId,Name,Breed,Age,Gender,AdoptionPrice,IsCastrated,Coat,Size,IsAffectionate,Location,ActivityLevel,Color,Description,Status,PictureUrl")] Pet pet)
+        public async Task<IActionResult> Create(CreatePetListing petListingVM)
         {
-            // if (ModelState.IsValid)
-            // {
-            //     _context.Add(pet);
-            //     await _context.SaveChangesAsync();
-            //     return RedirectToAction(nameof(Index));
-            // }
-            return View();
+            if (ModelState.IsValid)
+            {
+                string uniqueFileName = null;
+               // handling file upload
+                   string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+                   uniqueFileName = Guid.NewGuid().ToString() + "_" + petListingVM.ProfilePicture.FileName;
+                   string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                   using (var fileStream = new FileStream(filePath, FileMode.Create))
+                   {
+                       petListingVM.ProfilePicture.CopyTo(fileStream);
+                   }
+
+                   // Setting the PictureUrl property to the relative path
+                   petListingVM.PictureUrl = "/images/" + uniqueFileName;
+                   var newListing = new Pet()
+                   {
+                       Name = petListingVM.Name,
+                       Breed = petListingVM.Breed,
+                       Gender = petListingVM.Gender,
+                       IsCastrated = petListingVM.IsCastrated,
+                       Coat = petListingVM.Coat,
+                       Size = petListingVM.Size,
+                       IsAffectionate = petListingVM.IsAffectionate,
+                       Location = petListingVM.Location,
+                       ActivityLevel = petListingVM.ActivityLevel,
+                       Color = petListingVM.Color,
+                       Description = petListingVM.Description,
+                       Status = petListingVM.Status,
+                       PictureUrl = petListingVM.PictureUrl,
+                   };
+                   await _petService.AddPet(newListing);
+                   return RedirectToAction(nameof(Index));
+            }
+            return View(petListingVM);
         }
 
         // GET: Pet/Edit/5

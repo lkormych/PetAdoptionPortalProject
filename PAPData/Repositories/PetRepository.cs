@@ -19,4 +19,9 @@ public class PetRepository : IPetRepository
     {
         return await _context.Pets.FindAsync(id);
     }
+    public async Task AddPet(Pet pet)
+    {
+        _context.Pets.Add(pet);
+        await _context.SaveChangesAsync();
+    }
 }

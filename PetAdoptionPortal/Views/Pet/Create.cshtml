@@ -102,15 +102,15 @@
     <div class="col-12">
         <label asp-for="Status"></label>
         @Html.DropDownListFor(model => model.Status,
-            new SelectList(new List<string> { "Available", "Adopted" }),
+            Html.GetEnumSelectList<PAPData.Entities.PetStatus>(),
             "Choose Status",
             new { @class = "form-control" })
         <span asp-validation-for="Status" class="text-danger"></span>
     </div>
     <div class="col-12">
-        <label asp-for="PictureUrl" class="control-label"></label>
-        <input asp-for="PictureUrl" class="form-control" />
-        <span asp-validation-for="PictureUrl" class="text-danger"></span>
+        <label asp-for="ProfilePicture" class="control-label"></label>
+        <input asp-for="ProfilePicture" type="file" class="form-control" />
+        <span asp-validation-for="ProfilePicture" class="text-danger"></span>
     </div>
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="col-12">

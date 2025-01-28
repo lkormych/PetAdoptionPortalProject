@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using PAPData.Entities;
 
 namespace PetAdoptionPortal.Models;
 
@@ -40,7 +41,9 @@ public class CreatePetListing
     [StringLength(1000, ErrorMessage = "Description must be between 50 and 1000 characters.", MinimumLength = 50)]
     public string Description { get; set; }
     [Required]
-    public string Status {get; set;} // Options: 0, 1 (Enum)
+    public PetStatus Status {get; set;} // Options: 0, 1 (Enum)
+    public string? PictureUrl { get; set; }
     [Required]
-    public string PictureUrl { get; set; }
+    [Display(Name = "Profile Picture")]
+    public IFormFile ProfilePicture { get; set; } // file upload
 }
