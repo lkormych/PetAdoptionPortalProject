@@ -53,20 +53,41 @@ namespace PetAdoptionPortal.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(CreatePetListing petListingVM)
         {
+            // custom validation for ProfilePicture
+            if (petListingVM.ProfilePicture == null || petListingVM.ProfilePicture.Length == 0)
+            {
+                ModelState.AddModelError("ProfilePicture", "Please upload a profile picture.");
+            }
+            else
+            {
+                // allowed file types 
+                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
+                var fileExtension = Path.GetExtension(petListingVM.ProfilePicture.FileName).ToLower();
+                if (!allowedExtensions.Contains(fileExtension))
+                {
+                    ModelState.AddModelError("ProfilePicture", "Only image files (JPG, JPEG, PNG, GIF) are allowed.");
+                }
+
+                // validating file size (limit to 5MB)
+                var maxFileSize = 5 * 1024 * 1024; // 5MB
+                if (petListingVM.ProfilePicture.Length > maxFileSize)
+                {
+                    ModelState.AddModelError("ProfilePicture", "The file size must be less than 5MB.");
+                }
+            }
             if (ModelState.IsValid)
             {
                 string uniqueFileName = null;
-               // handling file upload
+               // handling file upload and saving to database
                    string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
                    uniqueFileName = Guid.NewGuid().ToString() + "_" + petListingVM.ProfilePicture.FileName;
                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
                    using (var fileStream = new FileStream(filePath, FileMode.Create))
                    {
-                       petListingVM.ProfilePicture.CopyTo(fileStream);
+                       await petListingVM.ProfilePicture.CopyToAsync(fileStream);
                    }
-
-                   // Setting the PictureUrl property to the relative path
+                   
                    petListingVM.PictureUrl = "/images/" + uniqueFileName;
                    var newListing = new Pet()
                    {
@@ -87,6 +108,7 @@ namespace PetAdoptionPortal.Controllers
                    await _petService.AddPet(newListing);
                    return RedirectToAction(nameof(Index));
             }
+            // if validation fails, return to the form with errors
             return View(petListingVM);
         }
 

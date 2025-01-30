@@ -3342,3 +3342,9 @@ input, select, textarea {
 	color: red;
 	font-weight: bold ;
 }
+
+.edit-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}

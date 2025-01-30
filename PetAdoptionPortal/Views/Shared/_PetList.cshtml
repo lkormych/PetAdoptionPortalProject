@@ -9,7 +9,17 @@ else
 {
     <span class="image main"><img src="@Model.PictureUrl" alt="" /></span>
     <h1>@Model.Name</h1>
-    <h3>@Model.Breed</h3>
+    <div class="edit-container">
+    <h3>@Model.Breed
+    
+        @if (User.IsInRole("Admin"))
+        {
+            <a asp-action="Edit" asp-route-id="@Model.PetId">
+                <img src="~/images/edit.png" class="icon-edit">
+            </a>
+        }
+    </h3>
+    </div>
     <section>
         <div class="table">
             <table>
