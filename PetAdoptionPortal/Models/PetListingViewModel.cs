@@ -5,6 +5,7 @@ namespace PetAdoptionPortal.Models;
 
 public class PetListingViewModel
 {
+    public int PetId { get; set; }
     [Required]
     [StringLength(20, ErrorMessage = "Name must be between 1 and 20 characters.", MinimumLength = 1)]
     public string Name { get; set; }

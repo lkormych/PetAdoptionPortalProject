@@ -26,5 +26,10 @@ public class PetService
     {
         await petRepository.AddPet(pet);
     }
+
+    public async Task UpdatePet(Pet pet)
+    {
+        await petRepository.UpdatePet(pet);
+    }
   
 }

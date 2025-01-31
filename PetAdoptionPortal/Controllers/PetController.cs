@@ -10,8 +10,7 @@ using PAPData.Entities;
 using PAPServices;
 using PetAdoptionPortal.Models;
 
-namespace PetAdoptionPortal.Controllers
-{
+namespace PetAdoptionPortal.Controllers;
     public class PetController : Controller
     {
         private readonly PetService _petService;
@@ -33,6 +32,8 @@ namespace PetAdoptionPortal.Controllers
         public async Task<IActionResult> Details(int id)
         {
             var pet = await _petService.GetPetById(id);
+            if (pet == null)
+                return NotFound();
             return View(pet);
         }
 
@@ -52,60 +53,11 @@ namespace PetAdoptionPortal.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(PetListingViewModel petListingViewModelVm)
         {
-            // custom validation for ProfilePicture
-            if (petListingViewModelVm.ProfilePicture == null || petListingViewModelVm.ProfilePicture.Length == 0)
-            {
-                ModelState.AddModelError("ProfilePicture", "Please upload a profile picture.");
-            }
-            else
-            {
-                // allowed file types 
-                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
-                var fileExtension = Path.GetExtension(petListingViewModelVm.ProfilePicture.FileName).ToLower();
-                if (!allowedExtensions.Contains(fileExtension))
-                {
-                    ModelState.AddModelError("ProfilePicture", "Only image files (JPG, JPEG, PNG, GIF) are allowed.");
-                }
-
-                // validating file size (limit to 5MB)
-                var maxFileSize = 5 * 1024 * 1024; // 5MB
-                if (petListingViewModelVm.ProfilePicture.Length > maxFileSize)
-                {
-                    ModelState.AddModelError("ProfilePicture", "The file size must be less than 5MB.");
-                }
-            }
+            CustomValidationProfilePicture(petListingViewModelVm.ProfilePicture);
             if (ModelState.IsValid)
             {
-                string uniqueFileName = null;
-               // handling file upload and saving to database
-                   string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
-                   uniqueFileName = Guid.NewGuid().ToString() + "_" + petListingViewModelVm.ProfilePicture.FileName;
-                   string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-                   using (var fileStream = new FileStream(filePath, FileMode.Create))
-                   {
-                       await petListingViewModelVm.ProfilePicture.CopyToAsync(fileStream);
-                   }
-                   
-                   petListingViewModelVm.PictureUrl = "/images/" + uniqueFileName;
-                   var newListing = new Pet()
-                   {
-                       Name = petListingViewModelVm.Name,
-                       Breed = petListingViewModelVm.Breed,
-                       Age = petListingViewModelVm.Age,
-                       AdoptionPrice = petListingViewModelVm.AdoptionPrice,
-                       Gender = petListingViewModelVm.Gender,
-                       IsCastrated = petListingViewModelVm.IsCastrated,
-                       Coat = petListingViewModelVm.Coat,
-                       Size = petListingViewModelVm.Size,
-                       IsAffectionate = petListingViewModelVm.IsAffectionate,
-                       Location = petListingViewModelVm.Location,
-                       ActivityLevel = petListingViewModelVm.ActivityLevel,
-                       Color = petListingViewModelVm.Color,
-                       Description = petListingViewModelVm.Description,
-                       Status = petListingViewModelVm.Status,
-                       PictureUrl = petListingViewModelVm.PictureUrl,
-                   };
+                   petListingViewModelVm.PictureUrl = await SaveProfilePictureAsync(petListingViewModelVm.ProfilePicture);
+                   var newListing = MapToPet(petListingViewModelVm);
                    await _petService.AddPet(newListing);
                    return RedirectToAction(nameof(Index));
             }
@@ -114,28 +66,14 @@ namespace PetAdoptionPortal.Controllers
         }
 
         // GET: Pet/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id)
         {
             var pet = await _petService.GetPetById(id);
-            var petListingModel = new PetListingViewModel()
-            {
-                Name = pet.Name,
-                Breed = pet.Breed,
-                Age = pet.Age,
-                Gender = pet.Gender,
-                AdoptionPrice = pet.AdoptionPrice,
-                IsCastrated = pet.IsCastrated,
-                Coat = pet.Coat,
-                Size = pet.Size,
-                IsAffectionate = pet.IsAffectionate,
-                Location = pet.Location,
-                ActivityLevel = pet.ActivityLevel,
-                Color = pet.Color,
-                Description = pet.Description,
-                Status = pet.Status,
-                PictureUrl = pet.PictureUrl,
-            };
-            return View(petListingModel);
+            if (pet == null)
+                return NotFound(); 
+            var petViewModel = MapToPetViewModel(pet);
+            return View(petViewModel);
         }
 
         // POST: Pet/Edit/5
@@ -143,34 +81,38 @@ namespace PetAdoptionPortal.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PetId,Name,Breed,Age,Gender,AdoptionPrice,IsCastrated,Coat,Size,IsAffectionate,Location,ActivityLevel,Color,Description,Status,PictureUrl")] Pet pet)
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Edit(PetListingViewModel petListingViewModelVm)
         {
-            // if (id != pet.PetId)
-            // {
-            //     return NotFound();
-            // }
-            //
-            // if (ModelState.IsValid)
-            // {
-            //     try
-            //     {
-            //         _context.Update(pet);
-            //         await _context.SaveChangesAsync();
-            //     }
-            //     catch (DbUpdateConcurrencyException)
-            //     {
-            //         if (!PetExists(pet.PetId))
-            //         {
-            //             return NotFound();
-            //         }
-            //         else
-            //         {
-            //             throw;
-            //         }
-            //     }
-            //     return RedirectToAction(nameof(Index));
-            // }
-            return View();
+            CustomValidationProfilePicture(petListingViewModelVm.ProfilePicture);
+            if (ModelState.IsValid)
+            {
+                var existingPet = await _petService.GetPetById(petListingViewModelVm.PetId);
+                if(existingPet == null)
+                    return NotFound();
+                existingPet.Name = petListingViewModelVm.Name;
+                existingPet.Breed = petListingViewModelVm.Breed;
+                existingPet.Age = petListingViewModelVm.Age;
+                existingPet.Gender = petListingViewModelVm.Gender;
+                existingPet.AdoptionPrice = petListingViewModelVm.AdoptionPrice;
+                existingPet.IsCastrated = petListingViewModelVm.IsCastrated;
+                existingPet.Coat = petListingViewModelVm.Coat;
+                existingPet.Size = petListingViewModelVm.Size;
+                existingPet.IsAffectionate = petListingViewModelVm.IsAffectionate;
+                existingPet.Location = petListingViewModelVm.Location;
+                existingPet.ActivityLevel = petListingViewModelVm.ActivityLevel;
+                existingPet.Color = petListingViewModelVm.Color;
+                existingPet.Description = petListingViewModelVm.Description;
+                existingPet.Status = petListingViewModelVm.Status;
+                if (petListingViewModelVm.ProfilePicture != null)
+                {
+                    existingPet.PictureUrl = await SaveProfilePictureAsync(petListingViewModelVm.ProfilePicture);
+                }
+                await _petService.UpdatePet(existingPet);
+                return RedirectToAction(nameof(Index));
+            }
+            // if validation fails, return to the form with errors
+            return View(petListingViewModelVm);
         }
 
         // GET: Pet/Delete/5
@@ -210,5 +152,93 @@ namespace PetAdoptionPortal.Controllers
         // {
         //     return _context.Pets.Any(e => e.PetId == id);
         // }
-    }
+
+        private void CustomValidationProfilePicture(IFormFile profilePicture)
+        {
+            // custom validation for ProfilePicture
+            if (profilePicture == null || profilePicture.Length == 0)
+            {
+                ModelState.AddModelError("ProfilePicture", "Please upload a profile picture.");
+                return;
+            }
+                // allowed file types 
+                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
+                var fileExtension = Path.GetExtension(profilePicture.FileName).ToLower();
+                if (!allowedExtensions.Contains(fileExtension))
+                {
+                    ModelState.AddModelError("ProfilePicture", "Only image files (JPG, JPEG, PNG, GIF) are allowed.");
+                }
+
+                // validating file size (limit to 5MB)
+                var maxFileSize = 5 * 1024 * 1024; // 5MB
+                if (profilePicture.Length > maxFileSize)
+                {
+                    ModelState.AddModelError("ProfilePicture", "The file size must be less than 5MB.");
+                }
+        }
+
+        private async Task<string> SaveProfilePictureAsync(IFormFile profilePicture)
+        {
+            if (profilePicture == null || profilePicture.Length == 0)
+            {
+                return null; // No file uploaded
+            }
+            // handling file upload and saving to database
+            string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+            string uniqueFileName = Guid.NewGuid().ToString() + "_" + profilePicture.FileName;
+            string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                await profilePicture.CopyToAsync(fileStream);
+            }
+            return "/images/" + uniqueFileName;
+        }
+
+        private Pet MapToPet(PetListingViewModel petListingViewModel)
+        {
+            return new Pet
+            {
+                Name = petListingViewModel.Name,
+                Breed = petListingViewModel.Breed,
+                Age = petListingViewModel.Age,
+                AdoptionPrice = petListingViewModel.AdoptionPrice,
+                Gender = petListingViewModel.Gender,
+                IsCastrated = petListingViewModel.IsCastrated,
+                Coat = petListingViewModel.Coat,
+                Size = petListingViewModel.Size,
+                IsAffectionate = petListingViewModel.IsAffectionate,
+                Location = petListingViewModel.Location,
+                ActivityLevel = petListingViewModel.ActivityLevel,
+                Color = petListingViewModel.Color,
+                Description = petListingViewModel.Description,
+                Status = petListingViewModel.Status,
+                PictureUrl = petListingViewModel.PictureUrl,
+            };
+        }
+
+        private PetListingViewModel MapToPetViewModel(Pet pet)
+        {
+            return new PetListingViewModel
+            {
+                PetId = pet.PetId,
+                Name = pet.Name,
+                Breed = pet.Breed,
+                Age = pet.Age,
+                Gender = pet.Gender,
+                AdoptionPrice = pet.AdoptionPrice,
+                IsCastrated = pet.IsCastrated,
+                Coat = pet.Coat,
+                Size = pet.Size,
+                IsAffectionate = pet.IsAffectionate,
+                Location = pet.Location,
+                ActivityLevel = pet.ActivityLevel,
+                Color = pet.Color,
+                Description = pet.Description,
+                Status = pet.Status,
+                PictureUrl = pet.PictureUrl,
+            };
+        }
 }
+    
+
