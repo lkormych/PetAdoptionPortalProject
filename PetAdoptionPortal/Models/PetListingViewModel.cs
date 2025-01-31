@@ -3,7 +3,7 @@ using PAPData.Entities;
 
 namespace PetAdoptionPortal.Models;
 
-public class CreatePetListing
+public class PetListingViewModel
 {
     [Required]
     [StringLength(20, ErrorMessage = "Name must be between 1 and 20 characters.", MinimumLength = 1)]
@@ -33,6 +33,7 @@ public class CreatePetListing
     [StringLength(15, ErrorMessage = "Location must be between 1 and 15 characters.", MinimumLength = 1)]
     public string Location { get; set; }
     [Required]
+    [Display(Name = "Activity Level")]
     public string ActivityLevel { get; set; } // Options: Active, Moderate, Low
     [Required]
     [StringLength(10, ErrorMessage = "Color must be between 3 and 10 characters.", MinimumLength = 3)]
