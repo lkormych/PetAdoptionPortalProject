@@ -74,4 +74,9 @@ public class IdentityService : IIdentityService
         }
         return await _userManager.AddToRoleAsync(user, roleName);
     }
+
+    public async Task SignOutAsync()
+    {
+        await _signInManager.SignOutAsync();
+    }
 }

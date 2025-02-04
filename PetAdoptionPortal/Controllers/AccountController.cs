@@ -113,4 +113,10 @@ public class AccountController : Controller
         }
         return View(registerModel);
     }
+
+    public async Task<IActionResult> Logout()
+    {
+        await _identityService.SignOutAsync();
+        return RedirectToAction("Index", "Home");
+    }
 }

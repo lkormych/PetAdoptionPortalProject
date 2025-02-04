@@ -15,4 +15,6 @@ public interface IIdentityService
     Task SignInAsync(IdentityUser user, bool isPersistent = false);
     
     Task<IdentityResult> AddToRoleAsync(IdentityUser user, string roleName);
+
+    Task SignOutAsync();
 }
