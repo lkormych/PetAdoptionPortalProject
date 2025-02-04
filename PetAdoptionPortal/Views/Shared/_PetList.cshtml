@@ -1,3 +1,4 @@
+@using PAPData.Entities
 @model PAPData.Entities.Pet
 
 @if (Model == null)
@@ -86,5 +87,10 @@ else
         <p></p>
     </section>
 }
-    
-<a class="button" asp-action="Index">Go back</a>
+
+@if (!User.IsInRole("Admin") && Model.Status == PetStatus.Available)
+{
+    <a class="button large" asp-action="ApplyForAdoption" asp-route-id="@Model.PetId">Apply for adoption</a>
+}
+<br/>
+<a class="button small" asp-action="Index">Go back</a>

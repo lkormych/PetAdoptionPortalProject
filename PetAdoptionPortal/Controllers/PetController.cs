@@ -9,17 +9,19 @@ using Microsoft.EntityFrameworkCore;
 using PAPData.Entities;
 using PAPServices;
 using PetAdoptionPortal.Models;
+using PetAdoptionPortal.Services;
 
 namespace PetAdoptionPortal.Controllers;
     public class PetController : Controller
     {
         private readonly PetService _petService;
         private readonly IWebHostEnvironment _webHostEnvironment;
-
-        public PetController(PetService petService, IWebHostEnvironment webHostEnvironment)
+        private readonly IIdentityService _identityService;
+        public PetController(PetService petService, IWebHostEnvironment webHostEnvironment, IIdentityService identityService)
         {
             _petService = petService;
             _webHostEnvironment = webHostEnvironment;
+            _identityService = identityService;
         }
 
         // GET: Pet
@@ -133,7 +135,30 @@ namespace PetAdoptionPortal.Controllers;
                 await _petService.DeletePet(id);
             return RedirectToAction(nameof(Index));
         }
+        
+        public async Task<IActionResult> ApplyForAdoption(int id)
+        {
+            // if user is not authorized, redirect to Login page
+            var userId =  _identityService.GetUserId(User);
+            if (userId == null)
+                return RedirectToAction("Login", "Account");
+            
+            var pet = await _petService.GetPetById(id);
+            if (pet == null)
+                return NotFound();
 
+            var adoptionRequest = new AppliedForAdoption
+            {
+                ClientId = userId.Value, // convert int? to int
+                PetId = pet.PetId,
+                ApplicationDate = DateTime.Now,
+                Status = AdoptionStatus.Pending
+            };
+            // SAVE to database
+            return RedirectToAction(nameof(Details),  new { id });
+        }
+
+        
         private void CustomValidationProfilePicture(IFormFile profilePicture)
         {
                 // allowed file types 

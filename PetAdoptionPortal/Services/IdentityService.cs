@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 
 namespace PetAdoptionPortal.Services;
@@ -78,5 +79,11 @@ public class IdentityService : IIdentityService
     public async Task SignOutAsync()
     {
         await _signInManager.SignOutAsync();
+    }
+
+    public int? GetUserId(ClaimsPrincipal user)
+    {
+        string userIdString =  _userManager.GetUserId(user);
+        return (int.TryParse(userIdString, out int userId)) ? userId : null;
     }
 }

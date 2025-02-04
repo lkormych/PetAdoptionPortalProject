@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using PetAdoptionPortal.Models;
 
@@ -17,4 +18,5 @@ public interface IIdentityService
     Task<IdentityResult> AddToRoleAsync(IdentityUser user, string roleName);
 
     Task SignOutAsync();
+    int? GetUserId(ClaimsPrincipal user); 
 }
