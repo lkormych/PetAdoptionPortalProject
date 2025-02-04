@@ -31,5 +31,9 @@ public class PetService
     {
         await petRepository.UpdatePet(pet);
     }
-  
+
+    public async Task DeletePet(int id)
+    {
+        await petRepository.DeletePet(id);
+    }
 }

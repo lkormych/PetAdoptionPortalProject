@@ -27,7 +27,18 @@ public class PetRepository : IPetRepository
 
     public async Task UpdatePet(Pet pet)
     {
+        var existingPet = await _context.Pets.FindAsync(pet.PetId);
         _context.Pets.Update(pet);
         await _context.SaveChangesAsync();
+    }
+
+    public async Task DeletePet(int id)
+    {
+        var existingPet = await _context.Pets.FindAsync(id);
+        if (existingPet != null)
+        {
+            _context.Pets.Remove(existingPet);
+            await _context.SaveChangesAsync();
+        }
     }
 }

@@ -3337,14 +3337,5 @@ input, select, textarea {
 /*	list-style: none; */
 /*}*/
 
-.text-danger
-{
-	color: red;
-	font-weight: bold ;
-}
 
-.edit-container {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
+

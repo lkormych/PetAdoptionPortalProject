@@ -108,6 +108,7 @@
                 new { @class = "form-control" })
             <span asp-validation-for="Status" class="text-danger"></span>
         </div>
+        <input type="hidden" asp-for="PictureUrl" />
         <div class="col-12">
             <label asp-for="ProfilePicture" class="control-label"></label>
             <input asp-for="ProfilePicture" type="file" class="form-control" id="fileInput"/>

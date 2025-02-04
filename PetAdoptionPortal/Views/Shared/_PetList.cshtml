@@ -10,20 +10,28 @@ else
     <span class="image main"><img src="@Model.PictureUrl" alt="" /></span>
     <h1>@Model.Name</h1>
     <div class="edit-container">
-    <h3>@Model.Breed
+    <h3>@Model.Breed 
     
         @if (User.IsInRole("Admin"))
         {
-            <a asp-action="Edit" asp-route-id="@Model.PetId">
-                <img src="~/images/edit.png" class="icon-edit">
-            </a>
+            <ul class="icons" style="display: flex; justify-content: flex-end; padding: 0; margin-top: -2.2em; list-style: none;">
+                <li style="margin-left: 10px;">
+                    <a asp-action="Edit" asp-route-id="@Model.PetId">
+                        <img src="~/images/edit.png" class="detail-icon" style="height: 1.8em; width: 1.8em;">
+                    </a>
+                </li>
+                <li style="margin-left: 10px;">
+                    <a asp-action="Delete" asp-route-id="@Model.PetId">
+                        <img src="~/images/delete.png" class="detail-icon" style="height: 1.8em; width: 1.8em;">
+                    </a>
+                </li>
+            </ul>
         }
     </h3>
     </div>
     <section>
         <div class="table">
             <table>
-        
                 <tbody>
                 <tr>
                     <td><strong>Age:</strong></td>

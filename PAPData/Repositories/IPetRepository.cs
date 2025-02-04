@@ -7,4 +7,6 @@ public interface IPetRepository
    Task AddPet(Pet pet);
    
    Task UpdatePet(Pet pet);
+   
+   Task DeletePet(int id);
 }

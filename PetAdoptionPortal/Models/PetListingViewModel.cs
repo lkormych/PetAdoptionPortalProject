@@ -45,7 +45,7 @@ public class PetListingViewModel
     [Required]
     public PetStatus Status {get; set;} // Options: 0, 1 (Enum)
     public string? PictureUrl { get; set; }
-    [Required]
+    
     [Display(Name = "Profile Picture")]
-    public IFormFile ProfilePicture { get; set; } // file upload
+    public IFormFile? ProfilePicture { get; set; } // file upload
 }
