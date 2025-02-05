@@ -12,25 +12,32 @@ using PetAdoptionPortal.Models;
 using PetAdoptionPortal.Services;
 
 namespace PetAdoptionPortal.Controllers;
+[Authorize]
     public class PetController : Controller
     {
         private readonly PetService _petService;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IIdentityService _identityService;
-        public PetController(PetService petService, IWebHostEnvironment webHostEnvironment, IIdentityService identityService)
+        private readonly ClientService _clientService;
+        private readonly AdoptionApplicationService _adoptionApplicationService;
+        public PetController(PetService petService, IWebHostEnvironment webHostEnvironment, IIdentityService identityService, ClientService clientService, AdoptionApplicationService adoptionApplicationService)
         {
             _petService = petService;
             _webHostEnvironment = webHostEnvironment;
             _identityService = identityService;
+            _clientService = clientService;
+            _adoptionApplicationService = adoptionApplicationService;
         }
 
         // GET: Pet
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             return View(await _petService.GetAllAvailablePets());
         }
 
         // GET: Pet/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
             var pet = await _petService.GetPetById(id);
@@ -136,26 +143,54 @@ namespace PetAdoptionPortal.Controllers;
             return RedirectToAction(nameof(Index));
         }
         
+        [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> ApplyForAdoption(int id)
         {
             // if user is not authorized, redirect to Login page
-            var userId =  _identityService.GetUserId(User);
-            if (userId == null)
+            var user =  await _identityService.GetUserAsync(User);
+            if (user == null)
                 return RedirectToAction("Login", "Account");
             
             var pet = await _petService.GetPetById(id);
             if (pet == null)
                 return NotFound();
+            var client = await _clientService.FindClientByIdentityUser(user.Id);
+            if (client == null)
+                return RedirectToAction("Login", "Account");
 
-            var adoptionRequest = new AppliedForAdoption
+            var adoptionVM = new AdoptionPreviewViewModel()
             {
-                ClientId = userId.Value, // convert int? to int
                 PetId = pet.PetId,
-                ApplicationDate = DateTime.Now,
-                Status = AdoptionStatus.Pending
+                PetBreed = pet.Breed,
+                PetName = pet.Name,
+                ClientId = client.Id,
+                ClientName = client.FirstName,
+                ClientSurname = client.LastName,
+                ClientEmail = client.Email,
+                DogImage = pet.PictureUrl,
             };
-            // SAVE to database
-            return RedirectToAction(nameof(Details),  new { id });
+            return View(adoptionVM);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> ConfirmAdoption(AdoptionPreviewViewModel adoptionVM)
+        {
+            if (!ModelState.IsValid)
+                return View(nameof(ApplyForAdoption), adoptionVM);
+                // here logic to update Client data
+            var application = new AppliedForAdoption()
+            {
+                    PetId = adoptionVM.PetId,
+                    ClientId = adoptionVM.ClientId,
+                    ApplicationDate = DateTime.Now,
+                    Status = AdoptionStatus.Pending,
+             };
+            await _adoptionApplicationService.AddApplication(application);
+                // here also TempData
+            return RedirectToAction(nameof(Details), new { id = adoptionVM.PetId });
+           
         }
 
         

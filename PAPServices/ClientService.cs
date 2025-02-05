@@ -17,4 +17,9 @@ public class ClientService
     {
         await clientRepository.AddClient(client);
     }
+
+    public async Task<Client?> FindClientByIdentityUser(string identityUserId)
+    {
+        return await clientRepository.FindClientByIdentityUser(identityUserId);
+    }
 }

@@ -11,10 +11,12 @@ public class AccountController : Controller
 {
     private readonly IIdentityService _identityService;
     private readonly ClientService _clientService;
-    public AccountController(IIdentityService identityService, ClientService clientService)
+    private readonly ILogger _logger;
+    public AccountController(IIdentityService identityService, ClientService clientService, ILogger<AccountController> logger)
     {
         _identityService = identityService;
         _clientService = clientService;
+        _logger = logger;
     }
     // GET
     public IActionResult Login()
@@ -113,7 +115,8 @@ public class AccountController : Controller
         }
         return View(registerModel);
     }
-
+    [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Logout()
     {
         await _identityService.SignOutAsync();

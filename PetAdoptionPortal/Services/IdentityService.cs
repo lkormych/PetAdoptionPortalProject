@@ -86,4 +86,9 @@ public class IdentityService : IIdentityService
         string userIdString =  _userManager.GetUserId(user);
         return (int.TryParse(userIdString, out int userId)) ? userId : null;
     }
+
+    public async Task<IdentityUser?> GetUserAsync(ClaimsPrincipal user)
+    {
+        return await _userManager.GetUserAsync(user);
+    }
 }

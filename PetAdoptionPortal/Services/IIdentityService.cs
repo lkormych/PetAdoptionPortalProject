@@ -19,4 +19,6 @@ public interface IIdentityService
 
     Task SignOutAsync();
     int? GetUserId(ClaimsPrincipal user); 
+    
+    Task<IdentityUser?> GetUserAsync(ClaimsPrincipal user);
 }

@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace PAPData.Entities.Repositories;
 
 public class ClientRepository : IClientRepository
@@ -13,5 +15,9 @@ public class ClientRepository : IClientRepository
     {
         _context.Clients.Add(client);
         await _context.SaveChangesAsync();
+    }
+    public async Task<Client?> FindClientByIdentityUser(string identityUserId)
+    {
+        return await _context.Clients.FirstOrDefaultAsync(c => c.IdentityUserId == identityUserId);
     }
 }

@@ -25,6 +25,9 @@ builder.Services.AddScoped<PetService>();
 builder.Services.AddScoped<IClientRepository, ClientRepository>();
 builder.Services.AddScoped<ClientService>();
 
+builder.Services.AddScoped<IAdoptionApplicationRepository, AdoptionApplicationRepository>();
+builder.Services.AddScoped<AdoptionApplicationService>();
+
 // adding authorization policies
 builder.Services.AddAuthorization(options =>
 {
