@@ -16,4 +16,10 @@ public class AdoptionApplicationService
     {
         await _adoptionApplicationRepository.AddApplication(application);
     }
+
+    public async Task<bool> UserAlreadyAppliedForAdoption(int petId, int userId)
+    {
+        var existingApplication = await _adoptionApplicationRepository.FindApplicationByPetIdUserId(userId, petId);
+        return existingApplication != null;
+    }
 }

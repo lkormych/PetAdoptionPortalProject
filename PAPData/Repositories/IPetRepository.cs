@@ -9,4 +9,6 @@ public interface IPetRepository
    Task UpdatePet(Pet pet);
    
    Task DeletePet(int id);
+   
+   Task<List<Pet>> ListPetsWithFilterParameters(string? name, string? size, string? location, string? breed);
 }

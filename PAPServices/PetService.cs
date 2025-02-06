@@ -36,4 +36,9 @@ public class PetService
     {
         await petRepository.DeletePet(id);
     }
+
+    public async Task<List<Pet>> ListPetsWithFilterParameters( string? name, string? size, string? location, string? breed)
+    {
+        return await petRepository.ListPetsWithFilterParameters(name, size, location, breed);
+    }
 }

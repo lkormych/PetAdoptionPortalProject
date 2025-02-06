@@ -22,4 +22,14 @@ public class ClientService
     {
         return await clientRepository.FindClientByIdentityUser(identityUserId);
     }
+    
+    public async Task UpdateClient(Client client)
+    {
+        await clientRepository.UpdateClient(client);
+    }
+
+    public async Task<Client?> FindClientById(int clientId)
+    {
+        return await clientRepository.FindClientById(clientId);
+    }
 }

@@ -41,4 +41,20 @@ public class PetRepository : IPetRepository
             await _context.SaveChangesAsync();
         }
     }
+
+    // to filter the List of pets according to available parameters
+    public async Task<List<Pet>> ListPetsWithFilterParameters(string? name, string? size, string? location, string? breed)
+    {
+        var query = _context.Pets.Where(p => p.Status == 0);
+        if (!string.IsNullOrEmpty(name))
+            query = query.Where(p => p.Name.Contains(name));
+        if (!string.IsNullOrEmpty(size))
+            query = query.Where(p => p.Size.Contains(size));
+        if (!string.IsNullOrEmpty(location))
+            query = query.Where(p => p.Location.Contains(location));
+        if (!string.IsNullOrEmpty(breed))
+            query = query.Where(p => p.Breed.Contains(breed));
+         // if all parameters are null, return list of all pets
+        return await query.ToListAsync();
+    }
 }

@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace PAPData.Entities.Repositories;
 
 public class AdoptionApplicationRepository : IAdoptionApplicationRepository
@@ -12,5 +14,10 @@ public class AdoptionApplicationRepository : IAdoptionApplicationRepository
     {
         _context.Applications.Add(application);
         await _context.SaveChangesAsync();
+    }
+
+    public async Task<AppliedForAdoption?> FindApplicationByPetIdUserId(int petId, int userId)
+    {
+        return await _context.Applications.Where(a => a.PetId == petId && a.ClientId == userId).FirstOrDefaultAsync();
     }
 }

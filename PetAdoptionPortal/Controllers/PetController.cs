@@ -31,11 +31,23 @@ namespace PetAdoptionPortal.Controllers;
 
         // GET: Pet
         [AllowAnonymous]
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
-            return View(await _petService.GetAllAvailablePets());
+            var petSearchVM = new PetSearchViewModel();
+            petSearchVM.ListPets = await _petService.GetAllAvailablePets();
+            return View(petSearchVM);
         }
-
+        
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> Search(PetSearchViewModel petSearchVM)
+        {
+            var pets = await _petService.ListPetsWithFilterParameters(petSearchVM.PetName, petSearchVM.PetSize, petSearchVM.PetLocation, petSearchVM.PetBreed);
+            petSearchVM.ListPets = pets; 
+            return View(nameof(Index), petSearchVM);
+        }
+        
         // GET: Pet/Details/5
         [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
@@ -154,7 +166,7 @@ namespace PetAdoptionPortal.Controllers;
             var pet = await _petService.GetPetById(id);
             if (pet == null)
                 return NotFound();
-            var client = await _clientService.FindClientByIdentityUser(user.Id);
+            var client = await _clientService.FindClientByIdentityUser(user.Id); // find Client by string IdentityUserId
             if (client == null)
                 return RedirectToAction("Login", "Account");
 
@@ -169,6 +181,9 @@ namespace PetAdoptionPortal.Controllers;
                 ClientEmail = client.Email,
                 DogImage = pet.PictureUrl,
             };
+            // if user has already applied for adoption of the dog, he can no longer apply for the same dog
+            var applicationExists = await _adoptionApplicationService.UserAlreadyAppliedForAdoption(adoptionVM.ClientId, adoptionVM.PetId);
+            ViewBag.ApplicationExists = applicationExists ? "You have already applied for adoption of me :)" : null;
             return View(adoptionVM);
         }
 
@@ -179,7 +194,10 @@ namespace PetAdoptionPortal.Controllers;
         {
             if (!ModelState.IsValid)
                 return View(nameof(ApplyForAdoption), adoptionVM);
-                // here logic to update Client data
+            // update data of the client in database
+            var client = await _clientService.FindClientById(adoptionVM.ClientId);
+            if (client != null)
+                await _clientService.UpdateClient(client);
             var application = new AppliedForAdoption()
             {
                     PetId = adoptionVM.PetId,
@@ -190,7 +208,6 @@ namespace PetAdoptionPortal.Controllers;
             await _adoptionApplicationService.AddApplication(application);
                 // here also TempData
             return RedirectToAction(nameof(Details), new { id = adoptionVM.PetId });
-           
         }
 
         

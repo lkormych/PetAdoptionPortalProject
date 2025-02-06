@@ -38,12 +38,6 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddScoped<IIdentityService, IdentityService>();
 var app = builder.Build();
 
-// seeding roles to database if not already exist
-// using (var scope = app.Services.CreateScope())
-// {
-//     var identityService = scope.ServiceProvider.GetRequiredService<IIdentityService>();
-//     await identityService.CheckRolesExistsAsync();
-// }
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

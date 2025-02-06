@@ -1,31 +1,69 @@
-@model IEnumerable<PAPData.Entities.Pet>
+@model PetSearchViewModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Dogs";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Explore our beautiful dogs</h1>
+<h1>Meet our beautiful dogs</h1>
 
-<p>
-    <a asp-action="Create">Create adoption listing</a>
-</p>
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        <a asp-action="Create">Create adoption listing</a>
+    </p>
+}
+<form asp-action="Search" method="get" style="margin-bottom:-20px;">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="fields">
+        <div class="field half">
+            <input asp-for="PetName" class="form-control" placeholder="Type name" />
+            <span asp-validation-for="PetName" class="text-danger"></span>
+        </div>
+        <div class="field half">
+            <input asp-for="PetSize" class="form-control" placeholder="Type size"/>
+            <span asp-validation-for="PetSize" class="text-danger"></span>
+        </div>
+        <div class="field half">
+            <input asp-for="PetLocation" class="form-control" placeholder="Type location"/>
+            <span asp-validation-for="PetLocation" class="text-danger"></span>
+        </div>
+        <div class="field half">
+            <input asp-for="PetBreed" class="form-control" placeholder="Type location"/>
+            <span asp-validation-for="PetBreed" class="text-danger"></span>
+        </div>
+       
+        
+        <div class="col-12">
+            <ul class="actions">
+                <li><input type="submit" value="search" class="" style="margin-top:30px;margin-left: 28px;"/></li>
+            </ul>
+        </div>
+    </div>
+</form>
 
-        <section class="tiles">
-            @foreach (var dog in Model)
-            {
-                <article>
-                    <span class="image">
-                        <img src="@dog.PictureUrl" alt=""/>
-                    </span>
-                    <a asp-action="Details" asp-route-id="@dog.PetId">
+@if(Model.ListPets != null && Model.ListPets.Any())
+{
+    <section class="tiles">
+        @foreach (var dog in Model.ListPets)
+        {
+            <article>
+                <span class="image">
+                    <img src="@dog.PictureUrl" alt=""/>
+                </span>
+                <a asp-action="Details" asp-route-id="@dog.PetId">
                     <h2>@dog.Name</h2>
                     <div class="content">
                         <text>@dog.Breed - @dog.Location </text>
                     </div>
-                    </a>
-                </article>
+                </a>
+            </article>
         
-            }
-        </section>
+        }
+    </section>
+}
+else if (Model.ListPets.Count == 0)
+{
+    <p style="color:#f2849e; font-weight: bold; font-size: 18px; text-align: center;">No results found.</p>
+}
    
