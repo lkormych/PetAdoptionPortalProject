@@ -27,7 +27,7 @@ The application provides an easy-to-use, simple and modern interface.
 - Authentication: ASP.NET Identity
 
 **_Tools_**
-- Jet Brains Rider, Docker
+- Jet Brains Rider, Docker, Microsoft SQL Server
 
 Other features and information is soon to arrive!
 Thank you for the attention :) 
