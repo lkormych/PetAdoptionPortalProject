@@ -33,25 +33,34 @@ Other features and information is soon to arrive!
 Thank you for the attention :) 
 
 Here are the screenshots of the web application and features that are already implemented:
-![img_2.png](img_2.png)
+![image](https://github.com/user-attachments/assets/33a9fd7c-b7c9-4dd5-a586-bb5e30100db9)
 
-![img_4.png](img_4.png)
 
-![img_5.png](img_5.png)
+![image](https://github.com/user-attachments/assets/9416c529-a265-4f59-972a-db0a388dd29a)
 
-![img_6.png](img_6.png)
 
-![img_7.png](img_7.png)
+![image](https://github.com/user-attachments/assets/bbde5b24-c820-46cf-a273-015bb47df8d0)
+
+
+![image](https://github.com/user-attachments/assets/c7aacb6d-abdd-4795-bfe6-5e84ac287a29)
+
+
+![image](https://github.com/user-attachments/assets/c45c7967-3a11-4b1e-bf2b-7cf4f5b52f30)
+
 
 Search feature:
-![img_10.png](img_10.png)
+![image](https://github.com/user-attachments/assets/338085ae-9b18-43a7-b50f-d20d6c9e5aa2)
+
 
 From the admin account possibility to edit/delete/create pet listing:
-![img_8.png](img_8.png)
+![image](https://github.com/user-attachments/assets/26e81a5e-5532-4ca1-b443-83869877989e)
 
-![img_9.png](img_9.png)
 
-![img_11.png](img_11.png)
+![image](https://github.com/user-attachments/assets/e6dc24a6-7592-4918-a1ad-b29a17cae195)
+
+
+![image](https://github.com/user-attachments/assets/08963327-2db2-4cef-bfae-86875db67b68)
+
 
 
 
