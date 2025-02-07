@@ -27,8 +27,32 @@ The application provides an easy-to-use, simple and modern interface.
 - Authentication: ASP.NET Identity
 
 **_Tools_**
-- Jet Brains Rider, Docker, Microsoft SQL Server
-
+- Jet Brains Rider, Docker
 
 Other features and information is soon to arrive!
 Thank you for the attention :) 
+
+Here are the screenshots of the web application and features that are already implemented:
+![img_2.png](img_2.png)
+
+![img_4.png](img_4.png)
+
+![img_5.png](img_5.png)
+
+![img_6.png](img_6.png)
+
+![img_7.png](img_7.png)
+
+Search feature:
+![img_10.png](img_10.png)
+
+From the admin account possibility to edit/delete/create pet listing:
+![img_8.png](img_8.png)
+
+![img_9.png](img_9.png)
+
+![img_11.png](img_11.png)
+
+
+
+
