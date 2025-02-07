@@ -8,6 +8,12 @@
 }
 else
 {
+    @if (TempData["Message"] != null)
+    {
+        <p style="color:#f2849e; font-weight: bold; font-size: 18px; text-align: center;">
+            @TempData["Message"]
+        </p>
+    }
     <span class="image main"><img src="@Model.PictureUrl" alt="" /></span>
     <h1>@Model.Name</h1>
     <div class="edit-container">

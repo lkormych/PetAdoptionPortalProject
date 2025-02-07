@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 using PAPData.Entities;
 using PAPServices;
 using PetAdoptionPortal.Models;
@@ -161,7 +162,7 @@ namespace PetAdoptionPortal.Controllers;
             // if user is not authorized, redirect to Login page
             var user =  await _identityService.GetUserAsync(User);
             if (user == null)
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction(nameof(Login), "Account");
             
             var pet = await _petService.GetPetById(id);
             if (pet == null)
@@ -206,6 +207,7 @@ namespace PetAdoptionPortal.Controllers;
                     Status = AdoptionStatus.Pending,
              };
             await _adoptionApplicationService.AddApplication(application);
+            TempData["Message"] = "Your adoption application has been submitted successfully.";
                 // here also TempData
             return RedirectToAction(nameof(Details), new { id = adoptionVM.PetId });
         }
