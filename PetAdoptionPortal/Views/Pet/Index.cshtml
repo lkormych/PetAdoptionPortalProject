@@ -13,7 +13,7 @@
         <a asp-action="Create">Create adoption listing</a>
     </p>
 }
-<form asp-action="Search" method="get" style="margin-bottom:-20px;">
+<form asp-action="Search" method="get" >
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="fields">
         <div class="field half">
@@ -29,14 +29,14 @@
             <span asp-validation-for="PetLocation" class="text-danger"></span>
         </div>
         <div class="field half">
-            <input asp-for="PetBreed" class="form-control" placeholder="Type location"/>
+            <input asp-for="PetBreed" class="form-control" placeholder="Type breed"/>
             <span asp-validation-for="PetBreed" class="text-danger"></span>
         </div>
        
         
         <div class="col-12">
             <ul class="actions">
-                <li><input type="submit" value="search" class="" style="margin-top:30px;margin-left: 28px;"/></li>
+                <li><input type="submit" value="search" class="" style="margin-top:30px;margin-left: 35px;"/></li>
             </ul>
         </div>
     </div>
@@ -44,7 +44,7 @@
 
 @if(Model.ListPets != null && Model.ListPets.Any())
 {
-    <section class="tiles">
+    <section class="tiles" style="margin-top:-50px; ">
         @foreach (var dog in Model.ListPets)
         {
             <article>
