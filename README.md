@@ -29,8 +29,6 @@ The application provides an easy-to-use, simple and modern interface.
 **_Tools_**
 - Jet Brains Rider, Docker
 
-Other features and information is soon to arrive!
-Thank you for the attention :) 
 
 Here are the screenshots of the web application and features that are already implemented:
 ![image](https://github.com/user-attachments/assets/33a9fd7c-b7c9-4dd5-a586-bb5e30100db9)
@@ -63,5 +61,6 @@ From the admin account possibility to edit/delete/create pet listing:
 
 
 
-
+Other features and information is soon to arrive!
+Thank you for the attention :) 
 
