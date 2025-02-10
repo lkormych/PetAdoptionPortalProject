@@ -22,4 +22,24 @@ public class AdoptionApplicationService
         var existingApplication = await _adoptionApplicationRepository.FindApplicationByPetIdUserId(userId, petId);
         return existingApplication != null;
     }
+    
+    public async Task<List<AppliedForAdoption>> GetAllApplications()
+    {
+        return await _adoptionApplicationRepository.GetAllApplications();
+    }
+
+    public async Task<List<AppliedForAdoption>> GetFilteredApplications(List<AdoptionStatus> selectedStatuses)
+    {
+        return await _adoptionApplicationRepository.GetFilteredApplications(selectedStatuses);
+    }
+
+    public async Task<AppliedForAdoption?> GetApplicationById(int id)
+    {
+        return await _adoptionApplicationRepository.GetApplicationById(id);
+    }
+
+    public async Task UpdateApplication(AppliedForAdoption application)
+    {
+        await _adoptionApplicationRepository.UpdateApplication(application);
+    }
 }

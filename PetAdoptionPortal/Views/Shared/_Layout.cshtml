@@ -64,6 +64,11 @@
             <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
             <li><a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></li>
             <li><a asp-area="" asp-controller="Pet" asp-action="Index">Pets</a></li>
+            @if (User.IsInRole("Admin"))
+            {
+                <li><a asp-area="" asp-controller="Admin" asp-action="Index">Applications</a></li>
+                <li><a asp-area="" asp-controller="Admin" asp-action="Index">Clients</a></li>
+            }
         </ul>
     </nav>
 

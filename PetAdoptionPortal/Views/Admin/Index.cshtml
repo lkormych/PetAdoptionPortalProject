@@ -1,0 +1,65 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using PAPData.Entities
+@model PetAdoptionPortal.Models.ApplicationFilterViewModel
+
+@{
+    ViewBag.Title = "Applications";
+    Layout = "_Layout";
+}
+
+<h1>Applications</h1>
+
+<form asp-action="FilterApplications" method="post">
+@foreach (var status in Model.ApplicationStatuses)
+{
+    <input type="checkbox" 
+           name="SelectedAdoptionStatuses" 
+           value="@status" 
+           id="@status"
+           @(Model.SelectedAdoptionStatuses != null && Model.SelectedAdoptionStatuses.Contains(status) ? "checked" : "") />
+    <label for="@status">@status</label>
+}
+<button class="button small" type="submit">Filter
+    </button>
+</form>
+
+@if (Model.Applications.Any())
+{
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Client ID</th>
+            <th>Pet ID</th>
+            <th>Application Date</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var app in Model.Applications)
+        {
+            <tr>
+                <td>@app.Id</td>
+                <td>@app.ClientId</td>
+                <td>@app.PetId</td>
+                <td>@app.ApplicationDate.ToShortDateString()</td>
+                <td>@app.Status</td>
+                <td>
+                    @if (app.Status == AdoptionStatus.Pending)
+                    {
+                        <form asp-action="ApproveApplication" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="@app.Id" />
+                            <button type="submit" class="btn btn-success">Approve</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No applications found.</p>
+}

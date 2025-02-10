@@ -20,4 +20,32 @@ public class AdoptionApplicationRepository : IAdoptionApplicationRepository
     {
         return await _context.Applications.Where(a => a.PetId == petId && a.ClientId == userId).FirstOrDefaultAsync();
     }
+
+    public async Task<List<AppliedForAdoption>> GetAllApplications()
+    {
+        return await _context.Applications.ToListAsync();
+    }
+
+    public async Task<List<AppliedForAdoption>> GetFilteredApplications(List<AdoptionStatus> selectedStatuses)
+    {
+        return await _context.Applications
+            .Include(a => a.Pet)
+            .Include(a => a.Client)
+            .Where(a => selectedStatuses.Count == 0 || selectedStatuses.Contains(a.Status))
+            .ToListAsync();
+    }
+
+    public async Task<AppliedForAdoption?> GetApplicationById(int id)
+    {
+        return await _context.Applications
+            .Include(a => a.Pet)
+            .Include(a => a.Client)
+            .FirstOrDefaultAsync(a => a.Id == id);
+    }
+    
+    public async Task UpdateApplication(AppliedForAdoption application)
+    {
+        _context.Applications.Update(application);
+        await _context.SaveChangesAsync();
+    }
 }
