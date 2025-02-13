@@ -3358,7 +3358,7 @@ dt {
 /* General Styling */
 .container {
 	margin: 0 auto;
-	padding: 20px;
+	padding: 0px;
 }
 
 /* Hero Section */
@@ -3404,7 +3404,7 @@ dt {
 	height: 300px;
 	object-fit: cover;
 	border-radius: 10px;
-	
+	/*box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);*/
 }
 
 .section-content {
