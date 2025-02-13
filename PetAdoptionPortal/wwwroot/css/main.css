@@ -3355,3 +3355,86 @@ dt {
 	min-width: 120px; 
 }
 
+/* General Styling */
+.container {
+	margin: 0 auto;
+	padding: 20px;
+}
+
+/* Hero Section */
+.hero {
+	background: url('https://media.istockphoto.com/id/1503385646/photo/portrait-funny-and-happy-shiba-inu-puppy-dog-peeking-out-from-behind-a-blue-banner-isolated.jpg?s=612x612&w=0&k=20&c=xZq8PhunL9ZmY243et3GOf04wJPBmHzeiQ3jw7nWCrY=') no-repeat center center;
+	background-size: cover;
+	text-align: center;
+	padding: 80px 20px;
+	color: white;
+	border-radius: 10px;
+	min-height: 400px; 
+	display: flex; 
+	flex-direction: column; 
+	align-items: center; 
+	justify-content: center; 
+}
+/*@media (max-width: 768px) {*/
+/*	.hero {*/
+/*		min-height: 300px;*/
+/*		padding: 50px 20px;*/
+/*	}*/
+/*}*/
+
+.hero p {
+	font-size: 30px;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+
+
+/* Section Styling */
+.section {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 40px 0;
+	border-bottom: 2px solid #ddd;
+}
+
+.section img {
+	width: 450px;
+	height: 300px;
+	object-fit: cover;
+	border-radius: 10px;
+	
+}
+
+.section-content {
+	flex: 1;
+	padding: 20px;
+	padding-left: 40px;
+}
+
+.section h2 {
+	font-size: 28px;
+	color: #333;
+	margin:0;
+}
+
+.section p {
+	font-size: 18px;
+	color: #555;
+	margin-bottom: 15px;
+}
+
+/* Coming Soon Button */
+.btn-secondary {
+	background: #ccc;
+	color: #666;
+	padding: 10px 20px;
+	font-size: 16px;
+	border-radius: 5px;
+	display: inline-block;
+	text-decoration: none;
+	cursor: not-allowed;
+}
+
+

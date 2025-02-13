@@ -2,9 +2,62 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>authenticated: @User.Identity.IsAuthenticated</p>
-    <p>Username: @User.Identity.Name</p>
-    <p></p>
+@* <div class="text-center"> *@
+@*     <h1 class="display-4">Welcome to our pet shelter 🐶❤️</h1> *@
+@*     <p>authenticated: @User.Identity.IsAuthenticated</p> *@
+@*     <p>Username: @User.Identity.Name</p> *@
+@*     <p></p> *@
+@* </div> *@
+
+<div class="container">
+    <!-- Hero Section -->
+    <div class="hero">
+        <p>Find your perfect furry friend today. Give a dog a loving home!</p>
+        <a class="button default" asp-controller="Pet" asp-action="Index">View Available Pets</a>
+    </div>
+
+    <!-- Available Pets Section -->
+    <div class="section">
+        <div>
+            <img src="https://imgcdn.stablediffusionweb.com/2024/11/16/36d7790b-0e84-4298-a0e2-ad760aa6d1eb.jpg" alt="Adopt a Dog">
+        </div>
+        <div class="section-content">
+            <h2>Find Your New Best Friend 🐕</h2>
+            <p>Browse our list of wonderful dogs eagerly waiting for a forever home. Each pup has a unique story and is looking for a loving family to give them a second chance. Open your heart and home to a furry companion and experience the unconditional love and joy they bring.</p>
+            <a class="button default" asp-controller="Pet" asp-action="Index">View Available Pets</a>
+        </div>
+    </div>
+
+    <!-- Adopted Pets Section -->
+    <div class="section">
+        <div>
+            <img src="https://st4.depositphotos.com/1007995/41134/i/450/depositphotos_411349790-stock-photo-confident-jack-russell-terrier-looking.jpg" alt="Happy Adopted Dogs">
+        </div>
+        <div class="section-content">
+            <h2>Happy Tails 🏡</h2>
+            <p>Meet the amazing dogs who have already found their forever homes! These heartwarming adoption stories show the joy and companionship that rescued pets bring to their new families. See their happy tails, read about their journeys, and get inspired to welcome a four-legged friend into your life. Your future best friend could be just one adoption away!</p>
+            <a class="button default" asp-controller="Pet" asp-action="Index">View Available Pets</a>
+        </div>
+    </div>
+
+    <!-- Adoption Rules Section -->
+    <div class="section">
+        <div>
+            <img src="https://images.pexels.com/photos/4587979/pexels-photo-4587979.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Adoption Rules">
+        </div>
+        <div class="section-content">
+            <h2>How Adoption Works 📜</h2>
+            <p>Adopting a dog is a rewarding experience, but it’s important to be prepared. Discover essential requirements, and how to create a safe and welcoming environment for your furry friend. Get ready to embark on a beautiful journey of love and companionship!</p>
+            <a class="button default" asp-controller="Pet" asp-action="Index">Adoption rules</a>
+        </div>
+    </div>
+
+    <!-- Articles Placeholder Section -->
+    <div class="section">
+        <div class="section-content">
+            <h2>Pet Care & Adoption Tips 📖</h2>
+            <p>In the future, we’ll share articles with expert advice on caring for your adopted pet.</p>
+            <a class="btn-secondary">Coming Soon...</a>
+        </div>
+    </div>
 </div>
