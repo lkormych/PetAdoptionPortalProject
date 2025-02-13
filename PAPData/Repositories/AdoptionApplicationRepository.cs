@@ -23,7 +23,7 @@ public class AdoptionApplicationRepository : IAdoptionApplicationRepository
 
     public async Task<List<AppliedForAdoption>> GetAllApplications()
     {
-        return await _context.Applications.ToListAsync();
+        return await _context.Applications.Include(a => a.Pet).Include(a=> a.Client).ToListAsync();
     }
 
     public async Task<List<AppliedForAdoption>> GetFilteredApplications(List<AdoptionStatus> selectedStatuses)

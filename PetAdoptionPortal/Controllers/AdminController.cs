@@ -52,4 +52,31 @@ public class AdminController : Controller
 
         return RedirectToAction(nameof(Index));
     }
+    
+    [HttpPost]
+    public async Task<IActionResult> RejectApplication(int id)
+    {
+        var application = await _adoptionApplicationService.GetApplicationById(id);
+        if (application == null)
+        {
+            return NotFound();
+        }
+
+        if (application.Status == AdoptionStatus.Pending)
+        {
+            application.Status = AdoptionStatus.Rejected;
+            await _adoptionApplicationService.UpdateApplication(application);
+        }
+
+        return RedirectToAction(nameof(Index));
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Details(int id)
+    {
+        var application = await _adoptionApplicationService.GetApplicationById(id);
+        if (application == null)
+            return NotFound();
+        return View(application);
+    }
 }

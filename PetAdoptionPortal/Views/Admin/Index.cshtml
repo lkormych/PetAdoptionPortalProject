@@ -30,7 +30,9 @@
         <tr>
             <th>ID</th>
             <th>Client ID</th>
+            <th>Client Name</th>
             <th>Pet ID</th>
+            <th>Pet Name</th>
             <th>Application Date</th>
             <th>Status</th>
             <th>Action</th>
@@ -40,18 +42,37 @@
         @foreach (var app in Model.Applications)
         {
             <tr>
-                <td>@app.Id</td>
+                <td><a asp-action="Details" asp-route-id="@app.Id" style="color:#f2849e; font-weight: bold;">@app.Id</a></td>
                 <td>@app.ClientId</td>
+                <td>@app.Client.FirstName @app.Client.LastName</td>
                 <td>@app.PetId</td>
+                <td>@app.Pet.Name</td>
                 <td>@app.ApplicationDate.ToShortDateString()</td>
-                <td>@app.Status</td>
+                <td style="color: @(app.Status == AdoptionStatus.Rejected ? "red" : (app.Status == AdoptionStatus.Approved ? "green" : "black"))">
+                    @app.Status
+                </td>
                 <td>
                     @if (app.Status == AdoptionStatus.Pending)
                     {
                         <form asp-action="ApproveApplication" method="post" style="display:inline;">
                             <input type="hidden" name="id" value="@app.Id" />
-                            <button type="submit" class="btn btn-success">Approve</button>
+                            <button type="submit" style="all: unset; cursor: pointer;">
+                                <img src="/images/Gray_tick.png" alt="Approve" width="37" height="37">
+                            </button>
                         </form>
+                        <form asp-action="RejectApplication" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="@app.Id" />
+                            <button type="submit" style="all: unset; cursor: pointer;">
+                                <img src="/images/reject.png" alt="Reject" width="35" height="35">
+                            </button>
+                            @* <button type="submit" style="border: none; padding: 0; background-color: white; "> *@
+                            @*     <img src="/images/plus.png" alt="Submit" style="width: 20px; height: 20px; border: none; background-color: white;"/> *@
+                            @* </button> *@
+                        </form>
+                    }
+                    @if (app.Status == AdoptionStatus.Approved || app.Status == AdoptionStatus.Rejected)
+                    {
+                        <span><strong>Completed</strong></span>
                     }
                 </td>
             </tr>
