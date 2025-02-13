@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PAPData.Entities;
+using PAPData.Entities.Repositories;
 using PAPServices;
 using PetAdoptionPortal.Models;
 
@@ -9,12 +10,16 @@ namespace PetAdoptionPortal.Controllers;
 public class AdminController : Controller
 {
     private readonly PetService _petService;
+    private readonly ClientService _clientService;
     private readonly AdoptionApplicationService _adoptionApplicationService;
+    private readonly IAdoptionRepository _adoptionRepository;
 
-    public AdminController(PetService petService, AdoptionApplicationService adoptionApplicationService)
+    public AdminController(PetService petService, ClientService clientService, AdoptionApplicationService adoptionApplicationService, IAdoptionRepository adoptionRepository)
     {
         _petService = petService;
+        _clientService = clientService;
         _adoptionApplicationService = adoptionApplicationService;
+        _adoptionRepository = adoptionRepository;
     }
     // GET
     public async Task<IActionResult> Index()
@@ -49,6 +54,13 @@ public class AdminController : Controller
         {
             application.Status = AdoptionStatus.Approved;
             await _adoptionApplicationService.UpdateApplication(application);
+            var newAdoption = new Adopted()
+            {
+                PetId = application.PetId,
+                ClientId = application.ClientId,
+                AdoptionDate = DateTime.Now
+            };
+            await _adoptionRepository.AddAdoption(newAdoption);
             var pet = await _petService.GetPetById(application.PetId);
             if (pet != null)
             {
@@ -84,5 +96,12 @@ public class AdminController : Controller
         if (application == null)
             return NotFound();
         return View(application);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Clients()
+    {
+        var clients = await _clientService.GetClients();
+        return View(clients);
     }
 }

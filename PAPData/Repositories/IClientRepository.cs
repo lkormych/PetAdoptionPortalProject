@@ -7,4 +7,6 @@ public interface IClientRepository
     
     Task UpdateClient(Client client);
     Task<Client?> FindClientById(int clientId);
+    Task<List<Client>> GetClients();
+    Task<Client?> GetClientByIdAndApplications(int clientId);
 }

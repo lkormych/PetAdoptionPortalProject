@@ -1,0 +1,39 @@
+@model System.Collections.Generic.List<PAPData.Entities.Client>
+
+@{
+    ViewBag.Title = "Clients";
+    Layout = "_Layout";
+}
+
+<h1>Clients</h1>
+@if (Model.Any())
+{
+    <table>
+        <thead>
+        <tr>
+            <th>Client ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Adress</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var client in Model)
+        {
+            <tr>
+                <td><a asp-action="ClientDetails" asp-route-id="@client.Id" style="color:#f2849e; font-weight: bold;">@client.Id</a></td>
+                <td>@client.FirstName @client.LastName</td>
+                <td>@client.Email</td>
+                <td>@client.PhoneNumber</td>
+                <td>@client.Address</td>
+                
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No clients found.</p>
+}

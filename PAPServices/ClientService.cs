@@ -32,4 +32,9 @@ public class ClientService
     {
         return await clientRepository.FindClientById(clientId);
     }
+
+    public async Task<List<Client>> GetClients()
+    {
+        return await clientRepository.GetClients();
+    }
 }

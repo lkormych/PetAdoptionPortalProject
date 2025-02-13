@@ -31,4 +31,14 @@ public class ClientRepository : IClientRepository
     {
         return await _context.Clients.FindAsync(clientId);
     }
+
+    public async Task<List<Client>> GetClients()
+    {
+        return await _context.Clients.ToListAsync();
+    }
+
+    public async Task<Client?> GetClientByIdAndApplications(int clientId)
+    {
+        return await _context.Clients.Include(a => a.AppliedForAdoptions).FirstOrDefaultAsync(c => c.Id == clientId);
+    }
 }

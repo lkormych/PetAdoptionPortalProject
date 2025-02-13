@@ -28,6 +28,9 @@ builder.Services.AddScoped<ClientService>();
 builder.Services.AddScoped<IAdoptionApplicationRepository, AdoptionApplicationRepository>();
 builder.Services.AddScoped<AdoptionApplicationService>();
 
+builder.Services.AddScoped<IAdoptionRepository, AdoptionRepository>();
+builder.Services.AddScoped<AdoptionService>();
+
 // adding authorization policies
 builder.Services.AddAuthorization(options =>
 {
