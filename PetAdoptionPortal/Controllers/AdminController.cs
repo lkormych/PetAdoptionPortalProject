@@ -8,10 +8,12 @@ namespace PetAdoptionPortal.Controllers;
 [Authorize(Policy = "Admin")]
 public class AdminController : Controller
 {
+    private readonly PetService _petService;
     private readonly AdoptionApplicationService _adoptionApplicationService;
 
-    public AdminController(AdoptionApplicationService adoptionApplicationService)
+    public AdminController(PetService petService, AdoptionApplicationService adoptionApplicationService)
     {
+        _petService = petService;
         _adoptionApplicationService = adoptionApplicationService;
     }
     // GET
@@ -43,13 +45,17 @@ public class AdminController : Controller
         {
             return NotFound();
         }
-
         if (application.Status == AdoptionStatus.Pending)
         {
             application.Status = AdoptionStatus.Approved;
             await _adoptionApplicationService.UpdateApplication(application);
+            var pet = await _petService.GetPetById(application.PetId);
+            if (pet != null)
+            {
+                pet.Status = PetStatus.Adopted;
+                await _petService.UpdatePet(pet);
+            }
         }
-
         return RedirectToAction(nameof(Index));
     }
     
