@@ -1,1 +1,1 @@
-To see the project info, switch to development branch! :)
+To see the project info, switch from 'main' to 'development' branch! :)
