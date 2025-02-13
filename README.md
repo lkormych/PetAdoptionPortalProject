@@ -1,6 +1,6 @@
 # **Pet Adoption Portal:**
 
-This project is now in progress, therefore not all the features are yet available, but I am working on it :)
+This project is almost finished, I am finishing the implementation of the last features. Below are the screenshots of some of the features.
 
 **_Description_**
 A web application designed to connect potential dog adopters with available dogs in need of a loving home. This platform allows users to browse adoptable pets, filter by breed, size, age, and place, and get detailed information about each pet and apply for adoption.
