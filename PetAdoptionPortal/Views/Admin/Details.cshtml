@@ -1,3 +1,4 @@
+@using PAPData.Entities
 @model PAPData.Entities.AppliedForAdoption
 
 @{
@@ -5,4 +6,58 @@
     Layout = "_Layout";
 }
 
-<h2>Application Details</h2>
+<h1>Application Details</h1>
+<div class="col-4">
+    <span class="image left"><img src="@Model.Pet.PictureUrl" alt=""/></span>
+    <hr />
+    <dl class="info-list">
+        <div class="info-item">
+            <dt>ID:</dt>
+            <dd>@Model.Id</dd>
+        </div>
+
+        <div class="info-item">
+            <dt>ClientId:</dt>
+            <dd>@Model.ClientId</dd>
+        </div>
+
+        <div class="info-item">
+            <dt>Client Name:</dt>
+            <dd>@Model.Client.FirstName @Model.Client.LastName</dd>
+        </div>
+
+        <div class="info-item">
+            <dt>Pet Name:</dt>
+            <dd>@Model.Pet.Name</dd>
+        </div>
+
+        <div class="info-item">
+            <dt>Created At:</dt>
+            <dd>@Model.ApplicationDate.ToString("dd/MM/yyyy")</dd>
+        </div>
+
+        <div class="info-item">
+            <dt>Status:</dt>
+            <dd style="color: @(Model.Status == AdoptionStatus.Rejected ? "red" : (Model.Status == AdoptionStatus.Approved ? "green" : "blue"))">
+                @Model.Status
+            </dd>
+        </div>
+
+        @if (Model.Status == AdoptionStatus.Pending)
+        {
+            <div class="info-item">
+                <form asp-action="ApproveApplication" method="post">
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <button type="submit" class="button primary">Approve</button>
+                </form>
+
+                <form asp-action="RejectApplication" method="post">
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <button type="submit" class="button default">Reject</button>
+                </form>
+            </div>
+        }
+    </dl>
+
+    <a asp-action="Index" class="button small" >Go back</a>
+</div>

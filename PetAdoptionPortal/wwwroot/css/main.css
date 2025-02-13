@@ -3338,4 +3338,20 @@ input, select, textarea {
 /*}*/
 
 
+.info-list {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+}
+
+.info-item {
+	display: flex;
+	gap: 15px; 
+	align-items: center;
+}
+
+dt {
+	font-weight: bold;
+	min-width: 120px; 
+}
 
