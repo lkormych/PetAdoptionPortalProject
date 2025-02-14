@@ -31,31 +31,41 @@ The application provides an easy-to-use, simple and modern interface.
 
 
 Here are the screenshots of the web application and features that are already implemented:
+
 Pages that are visible without logging in:
+
+Home page:
 <img width="711" alt="image" src="https://github.com/user-attachments/assets/79a2963e-ab48-438a-a347-d3452d771cdc" />
 
+Page with available dogs to adopt:
 ![image](https://github.com/user-attachments/assets/33a9fd7c-b7c9-4dd5-a586-bb5e30100db9)
 
-
+Dog details page:
 ![image](https://github.com/user-attachments/assets/9416c529-a265-4f59-972a-db0a388dd29a)
 
-
+Navigation bar pops up from the side when clicking on the burger icon:
 ![image](https://github.com/user-attachments/assets/bbde5b24-c820-46cf-a273-015bb47df8d0)
 
 
+Search feature with parameters:
+![image](https://github.com/user-attachments/assets/338085ae-9b18-43a7-b50f-d20d6c9e5aa2)
+
+
+LogIn en Register pages:
 ![image](https://github.com/user-attachments/assets/c7aacb6d-abdd-4795-bfe6-5e84ac287a29)
-<img width="677" alt="image" src="https://github.com/user-attachments/assets/1694b435-028b-40cf-becb-055810f88565" />
 
-
-<img width="584" alt="image" src="https://github.com/user-attachments/assets/dd149b60-af7e-4f3c-a8c8-62fd74e0a323" />
 
 
 ![image](https://github.com/user-attachments/assets/c45c7967-3a11-4b1e-bf2b-7cf4f5b52f30)
 
 
-Search feature:
-![image](https://github.com/user-attachments/assets/338085ae-9b18-43a7-b50f-d20d6c9e5aa2)
 
+**From User account:**
+1. Message if he has already applied for the adoption:
+   <img width="677" alt="image" src="https://github.com/user-attachments/assets/1694b435-028b-40cf-becb-055810f88565" />
+
+2. Message when he applies first time for the adoption:
+<img width="584" alt="image" src="https://github.com/user-attachments/assets/dd149b60-af7e-4f3c-a8c8-62fd74e0a323" />
 
 **From the admin account:**
 1. Possibility to edit/delete/create pet listing:
