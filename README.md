@@ -31,6 +31,9 @@ The application provides an easy-to-use, simple and modern interface.
 
 
 Here are the screenshots of the web application and features that are already implemented:
+Pages that are visible without logging in:
+<img width="711" alt="image" src="https://github.com/user-attachments/assets/79a2963e-ab48-438a-a347-d3452d771cdc" />
+
 ![image](https://github.com/user-attachments/assets/33a9fd7c-b7c9-4dd5-a586-bb5e30100db9)
 
 
@@ -41,6 +44,10 @@ Here are the screenshots of the web application and features that are already im
 
 
 ![image](https://github.com/user-attachments/assets/c7aacb6d-abdd-4795-bfe6-5e84ac287a29)
+<img width="677" alt="image" src="https://github.com/user-attachments/assets/1694b435-028b-40cf-becb-055810f88565" />
+
+
+<img width="584" alt="image" src="https://github.com/user-attachments/assets/dd149b60-af7e-4f3c-a8c8-62fd74e0a323" />
 
 
 ![image](https://github.com/user-attachments/assets/c45c7967-3a11-4b1e-bf2b-7cf4f5b52f30)
@@ -50,7 +57,8 @@ Search feature:
 ![image](https://github.com/user-attachments/assets/338085ae-9b18-43a7-b50f-d20d6c9e5aa2)
 
 
-From the admin account possibility to edit/delete/create pet listing:
+**From the admin account:**
+1. Possibility to edit/delete/create pet listing:
 ![image](https://github.com/user-attachments/assets/26e81a5e-5532-4ca1-b443-83869877989e)
 
 
@@ -59,6 +67,20 @@ From the admin account possibility to edit/delete/create pet listing:
 
 ![image](https://github.com/user-attachments/assets/08963327-2db2-4cef-bfae-86875db67b68)
 
+2. Possibility to see adoption applications from the users and approve/reject pending applications.
+   <img width="702" alt="image" src="https://github.com/user-attachments/assets/8138f179-5d74-4a9d-838e-e52794b0fddb" />
+
+3. Application Details page:
+   <img width="534" alt="image" src="https://github.com/user-attachments/assets/c91d961c-bd8e-4612-9f39-a824ce660aa0" />
+
+4. Filtering of applications by their status:
+   
+<img width="696" alt="image" src="https://github.com/user-attachments/assets/a07f413f-b58f-4aee-9cb2-55526ff2116a" />
+<img width="701" alt="image" src="https://github.com/user-attachments/assets/c2854fd0-4eda-4f6d-8142-2b5f4cf2252a" />
+
+
+3. Page with clients info:
+ <img width="534" alt="image" src="https://github.com/user-attachments/assets/a894f780-57b5-4bd5-85fe-ceb8f5b87c36" />
 
 
 Other features and information is soon to arrive!
