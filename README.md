@@ -63,10 +63,10 @@ LogIn en Register pages:
 
 
 **From User account:**
-1. Message if he has already applied for the adoption:
+1. Message if user has already applied for the adoption:
   <img width="584" alt="image" src="https://github.com/user-attachments/assets/dd149b60-af7e-4f3c-a8c8-62fd74e0a323" />
 
-2. Message when he applies first time for the adoption:
+2. Message when user applies first time for the adoption:
  <img width="677" alt="image" src="https://github.com/user-attachments/assets/1694b435-028b-40cf-becb-055810f88565" />
 
 **From the admin account:**
