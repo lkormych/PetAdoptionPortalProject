@@ -23,7 +23,7 @@ The application provides an easy-to-use, simple and modern interface.
 
 
 **_Technologies Used_**
-- Frontend: HTML, CSS, JavaScript
+- Frontend: HTML, CSS, JavaScript, Razor
 - Backend: ASP.NET Core MVC
 - Database: SQL Server
 - Authentication: ASP.NET Identity
